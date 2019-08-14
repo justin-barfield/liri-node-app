@@ -70,14 +70,17 @@ switch(switchVar[2]) {
 
             }
 
+            // Variable to hold all data in an array
+            var gatheredData = [
+
+                "Venue: " + resp.data[i].venue.name,
+                "Location: " + resp.data[i].venue.city + ", " + resp.data[i].venue.region,
+                "Event Date: " + moment(JSON.stringify(resp.data[i].datetime)).format("MM/DD/YYYY"),
+
+            ].join("\n\n")
+
             // Writes the logged search criteria to the log file
-            fs.appendFileSync("log.txt",
-
-            "\nVenue: " + resp.data[i].venue.name +
-            "\nLocation: " + resp.data[i].venue.city + ", " + resp.data[i].venue.region +
-            "\nEvent Date: " + moment(JSON.stringify(resp.data[i].datetime)).format("MM/DD/YYYY"),
-
-            (err) => {
+            fs.appendFileSync("log.txt", gatheredData, (err) => {
 
                 if( err ){
 
@@ -123,42 +126,73 @@ switch(switchVar[2]) {
 
     case "spotify-this-song":
 
+        console.log("Start Spotify search")
+
         spotify.search({
 
             type: "track",
             query: searchTerm
 
-        }, (err, resp, data) => {
+        }, function(err, data) {
+
+            if (err) {
+                return console.log('Error occurred: ' + err);
+            };
+
+            var jsonData = data.tracks.items;
+            console.log("tracks")
+            // console.log(data.tracks)
+            console.log("\n-------------");
+            console.log("album")
+            console.log("\n", data.tracks.items[1].album.name);
+            console.log("\n-------------");
+            console.log("artists")
+            console.log("\n", data.tracks.items[1].artists[0].name);
 
             console.log("\n-------------");
             console.log("\n-------------");
-            console.log("\n", resp.data);
-            console.log("\n-------------");
-            console.log("\n-------------");
 
+            for( i = 0; i < jsonData.length; i ++ ){
 
-        })
+                // Set wanted search results to a variable
+                var artists = jsonData[i].artists[0].name;
+                var songName = jsonData[i].name;
+                var previewUrl = jsonData[i].preview_url;
+                var album = jsonData[i].album.name;
 
-        fs.appendFileSync("log.txt", 
+                // Set preview url to not available if nothing is returned.
+                if( previewUrl === null ){
 
-        "\nArist(s): " + "resp.artist",
-        "\nSong Name: " + "resp.song",
-        "\nPreview: " + "resp.preview",
-        "\nAlbum: " + "resp.album",
-
-        (err) => {
-
-            if( err ){
-
-                console.log("-------------");
-                console.log("-------------");
-                return console.log("\n" + err);
+                    previewUrl = "Not available."
+                }
                 
+                // Variable to hold all data in an array
+                var gatheredData = [
+                    
+                    "\n-------------",
+                    "Arist(s): " + artists,
+                    "Song Name: " + songName,
+                    "Preview: " + previewUrl,
+                    "Album: " + album,
+                    
+                ].join("\n\n")
+                
+                fs.appendFileSync("log.txt", gatheredData, (err) => {
+                    
+                    if( err ){
+                        
+                        console.log("-------------");
+                        console.log("-------------");
+                        return console.log("\n" + err);
+                        
+                    }
+                    
+                    console.log("\n-------------");
+                    console.log("\nlog.txt updated");
+                } );
             }
+        });
 
-            console.log("\n-------------");
-            console.log("\nlog.txt updated");
-        } );
 
         break
 
@@ -202,7 +236,7 @@ switch(switchVar[2]) {
             console.log( respData.Plot );
             console.log( respData.Actors );
 
-            // Variable to hold all data in a sting form
+            // Variable to hold all data in an array
             var gatheredData = [
 
                 "---------------------------", 
