@@ -1,0 +1,21 @@
+---------------------------
+
+Movie Search!
+
+Title: The Lord of the Rings: The Fellowship of the Ring
+
+Release Year: 2001
+
+IMDB Rating: 8.8
+
+Rotten Tomatoes Rating: 91%
+
+Country Produced: New Zealand, USA
+
+Language: English, Sindarin
+
+Plot: A meek Hobbit from the Shire and eight companions set out on a journey to destroy the powerful One Ring and save Middle-earth from the Dark Lord Sauron.
+
+Actors: Alan Howard, Noel Appleby, Sean Astin, Sala Baker
+
+---------------------------

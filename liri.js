@@ -203,31 +203,31 @@ switch(switchVar[2]) {
             console.log( respData.Actors );
 
             // Variable to hold all data in a sting form
-            var gatheredData = JSON.stringify(
+            var gatheredData = [
 
-                "---------------------------" + 
+                "---------------------------", 
                 // "\n" +
-                "Movie Search!" + 
+                "Movie Search!", 
                 // "\n" +
-                "Title: " + resp.data.Title + 
+                "Title: " + resp.data.Title,
                 // "\n" +
-                "Release Year: " + respData.Year + 
+                "Release Year: " + respData.Year,
                 // "\n" +
-                "IMDB Rating: " + respData.imdbRating + 
+                "IMDB Rating: " + respData.imdbRating,
                 // "\n" +
-                "Rotten Tomatoes Rating: " + respData.Ratings[1].Value + 
+                "Rotten Tomatoes Rating: " + respData.Ratings[1].Value,
                 // "\n" +
-                "Country Produced: " + respData.Country + 
+                "Country Produced: " + respData.Country,
                 // "\n" +
-                "Language: " + respData.Language + 
+                "Language: " + respData.Language,
                 // "\n" +
-                "Plot: " + respData.Plot + 
+                "Plot: " + respData.Plot,
                 // "\n" +
-                "Actors: " + respData.Actors + 
+                "Actors: " + respData.Actors,
                 // "\n" +
                 "---------------------------"
 
-            )
+            ].join("\n\n")
 
             // Write logged data to the log file
             fs.appendFileSync("log.txt", gatheredData, "utf8", (err) => {
